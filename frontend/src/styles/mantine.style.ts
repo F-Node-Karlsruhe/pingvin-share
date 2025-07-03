@@ -2,20 +2,20 @@ import { MantineThemeOverride } from "@mantine/core";
 
 export default <MantineThemeOverride>{
   colors: {
-    victoria: [
-      "#E2E1F1",
-      "#C2C0E7",
-      "#A19DE4",
-      "#7D76E8",
-      "#544AF4",
-      "#4940DE",
-      "#4239C8",
-      "#463FA8",
-      "#47428E",
-      "#464379",
+    flame: [
+      "#FFE5E0", // 0 - lightest
+      "#FFCFC2", // 1
+      "#FFB39E", // 2
+      "#FF9477", // 3
+      "#FF6F4E", // 4
+      "#FF4E33", // 5 - main
+      "#E6452D", // 6
+      "#CC3C27", // 7
+      "#B23322", // 8
+      "#8C2719", // 9 - darkest
     ],
   },
-  primaryColor: "victoria",
+  primaryColor: "flame",
   components: {
     Modal: {
       styles: (theme) => ({
