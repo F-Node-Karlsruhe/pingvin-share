@@ -11,6 +11,7 @@ import { ShareService } from "src/share/share.service";
 import { ConfigService } from "src/config/config.service";
 import { JwtGuard } from "src/auth/guard/jwt.guard";
 import { User } from "@prisma/client";
+import { firstParam } from "src/utils/param.util";
 
 @Injectable()
 export class ShareSecurityGuard extends JwtGuard {
@@ -25,12 +26,11 @@ export class ShareSecurityGuard extends JwtGuard {
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const shareId = Object.prototype.hasOwnProperty.call(
-      request.params,
-      "shareId",
-    )
-      ? request.params.shareId
-      : request.params.id;
+    const shareId = firstParam(
+      Object.prototype.hasOwnProperty.call(request.params, "shareId")
+        ? request.params.shareId
+        : request.params.id,
+    );
 
     const shareToken = request.cookies[`share_${shareId}_token`];
 

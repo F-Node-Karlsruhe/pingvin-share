@@ -7,6 +7,7 @@ import { User } from "@prisma/client";
 import { Request } from "express";
 import { ConfigService } from "src/config/config.service";
 import { PrismaService } from "src/prisma/prisma.service";
+import { firstParam } from "src/utils/param.util";
 import { JwtGuard } from "../../auth/guard/jwt.guard";
 
 @Injectable()
@@ -20,12 +21,11 @@ export class ShareOwnerGuard extends JwtGuard {
 
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
-    const shareId = Object.prototype.hasOwnProperty.call(
-      request.params,
-      "shareId",
-    )
-      ? request.params.shareId
-      : request.params.id;
+    const shareId = firstParam(
+      Object.prototype.hasOwnProperty.call(request.params, "shareId")
+        ? request.params.shareId
+        : request.params.id,
+    );
 
     const share = await this.prisma.share.findUnique({
       where: { id: shareId },

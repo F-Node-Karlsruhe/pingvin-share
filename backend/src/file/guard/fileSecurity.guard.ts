@@ -10,6 +10,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { ShareSecurityGuard } from "src/share/guard/shareSecurity.guard";
 import { ShareService } from "src/share/share.service";
 import { ConfigService } from "src/config/config.service";
+import { firstParam } from "src/utils/param.util";
 
 @Injectable()
 export class FileSecurityGuard extends ShareSecurityGuard {
@@ -24,12 +25,11 @@ export class FileSecurityGuard extends ShareSecurityGuard {
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const shareId = Object.prototype.hasOwnProperty.call(
-      request.params,
-      "shareId",
-    )
-      ? request.params.shareId
-      : request.params.id;
+    const shareId = firstParam(
+      Object.prototype.hasOwnProperty.call(request.params, "shareId")
+        ? request.params.shareId
+        : request.params.id,
+    );
 
     const shareToken = request.cookies[`share_${shareId}_token`];
 

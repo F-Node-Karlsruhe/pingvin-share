@@ -1,6 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import * as fs from "fs";
-import * as sharp from "sharp";
+import * as sharpModule from "sharp";
+
+// sharp 0.35 types are ESM (`export default`), while the CJS build is the function itself.
+const sharp =
+  typeof sharpModule === "function" ? sharpModule : sharpModule.default;
 
 const IMAGES_PATH = "../frontend/public/img";
 
