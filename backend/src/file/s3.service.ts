@@ -25,7 +25,7 @@ import * as mime from "mime-types";
 import { File } from "./file.service";
 import { Readable } from "stream";
 import { validate as isValidUUID } from "uuid";
-import * as archiver from "archiver";
+import { ZipArchive } from "archiver";
 
 @Injectable()
 export class S3FileService {
@@ -312,7 +312,7 @@ export class S3FileService {
           throw new NotFoundException(`No files found for share ${shareId}`);
         }
 
-        const archive = archiver("zip", {
+        const archive = new ZipArchive({
           zlib: { level: parseInt(compressionLevel) },
         });
 
