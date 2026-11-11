@@ -7,6 +7,7 @@ import {
 import { Request } from "express";
 import * as moment from "moment";
 import { PrismaService } from "src/prisma/prisma.service";
+import { firstParam } from "src/utils/param.util";
 
 @Injectable()
 export class ShareTokenSecurity implements CanActivate {
@@ -14,12 +15,11 @@ export class ShareTokenSecurity implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
-    const shareId = Object.prototype.hasOwnProperty.call(
-      request.params,
-      "shareId",
-    )
-      ? request.params.shareId
-      : request.params.id;
+    const shareId = firstParam(
+      Object.prototype.hasOwnProperty.call(request.params, "shareId")
+        ? request.params.shareId
+        : request.params.id,
+    );
 
     const share = await this.prisma.share.findUnique({
       where: { id: shareId },
